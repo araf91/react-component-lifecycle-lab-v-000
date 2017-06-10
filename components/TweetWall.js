@@ -1,7 +1,7 @@
-import React from 'react';
-import Tweet from './Tweet';
+const React = require('react');
+const Tweet = require('./Tweet');
 
-export default class TweetWall extends React.Component {
+class TweetWall extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -10,10 +10,23 @@ export default class TweetWall extends React.Component {
   }
 
   // TODO: componentWillMount()
+  componentWillMount() {
+    this.setState({
+      tweets: this.props.newTweets
+    });
+  }
 
   // TODO: shouldComponentUpdate()
+  shouldComponentUpdate(nextProps) {
+    return nextProps.newTweets.length > 0;
+  }
 
   // TODO: componentWillReceiveProps()
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      tweets: [...nextProps.newTweets, ...this.state.tweets]
+    });
+  }
 
   render() {
     const tweets = this.state.tweets.map((tweet, index) => {
@@ -24,3 +37,5 @@ export default class TweetWall extends React.Component {
     );
   }
 }
+
+module.exports = TweetWall;
